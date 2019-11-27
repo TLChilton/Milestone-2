@@ -165,19 +165,19 @@ app.post('/login', async (req, res) => {
 
 // Proto download handler, will be implemented more intelligently later
 app.get('/download1', async (req, res) => {
-    res.download(path.join(__dirname + '/public/frankenstein.pdf'));
+    res.download(path.join(__dirname + '/public/pdfs/frankenstein.pdf'));
 });
 app.get('/download2', async (req, res) => {
-    res.download(path.join(__dirname + '/public/Moby_Dick.pdf'));
+    res.download(path.join(__dirname + '/public/pdfs/Moby_Dick.pdf'));
 });
 app.get('/download3', async (req, res) => {
-    res.download(path.join(__dirname + '/public/modestproposal.pdf'));
+    res.download(path.join(__dirname + '/public/pdfs/modestproposal.pdf'));
 });
 app.get('/download4', async (req, res) => {
-    res.download(path.join(__dirname + '/public/dracula.pdf'));
+    res.download(path.join(__dirname + '/public/pdfs/dracula.pdf'));
 });
 app.get('/download5', async (req, res) => {
-    res.download(path.join(__dirname + '/public/The_Scarlet_Letter.pdf'));
+    res.download(path.join(__dirname + '/public/pdfs/The_Scarlet_Letter.pdf'));
 });
 
 // Final server setup 

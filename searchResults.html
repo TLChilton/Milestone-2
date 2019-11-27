@@ -33,11 +33,12 @@
   <!-- This is super proto and I don't know exactly what i'm doing-->
     <div class="container">
         <!-- I'm thinking these p's can be manipulated in the js -->
-        <p id="isbn"> isbn goes here</p>
-        <p id="title"> title goes here</p>
-        <p id="author"> author goes here</p>
+        <!--9780194230032, "Frankenstein", "Mary Shelley", "frankenstein.pdf" -->
+        <p id="isbn"> 9780194230032 </p>
+        <h3 id="title"> Frakenstein </h3>
+        <p id="author"> Mary Shelley </p>
         <!-- and then this download method will use the file name from SQL -->
-        <button class="submit-button" action="/download" method="GET">Download Here</button>
+        <form action="/download1" method="GET"><button class="submit-button">Download Here</button></form>
     </div>
 </body>
 </html>
