@@ -11,7 +11,6 @@
   "dependencies": {
     "cookie-parser": "^1.4.4",
     "express-handlebars": "^3.1.0",
-    "jsdom": "^15.2.1",
     "migrate": "^1.6.2",
     "uuidv4": "^6.0.0"
   }
