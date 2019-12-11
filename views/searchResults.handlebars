@@ -1,8 +1,4 @@
-{{#if error}}
-  <div class="error">
-    <span style="color: red">{{message}}</span>
-  </div>
-{{/if}}
+
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -27,10 +23,15 @@
   <!-- This is super proto and I don't know exactly what i'm doing-->
     <div class="container">
         <!-- I'm thinking these p's can be manipulated in the js -->
-        <!--9780194230032, "Frankenstein", "Mary Shelley", "frankenstein.pdf" -->
-        <p id="isbn"> 9780194230032 </p>
-        <h3 id="title"> Frakenstein </h3>
-        <p id="author"> Mary Shelley </p>
+        {{#if search}}
+        <p id="isbn"> {{search.isbn}} </p>
+        <h3 id="title"> {{search.title}} </h3>
+        <p id="author"> {{search.author}} </p>
         <!-- and then this download method will use the file name from SQL -->
         <form action="/download1" method="GET"><button class="submit-button">Download Here</button></form>
+        {{else}}
+        <div class = "error">
+          <span style="color: red">No Results Found</span>
+        </div>
+        {{/if}}
     </div>

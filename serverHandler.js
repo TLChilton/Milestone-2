@@ -93,7 +93,6 @@ app.post('/search', async (req,res) => {
         req.body.search
     );
     console.log(search);
-    // DOM does not work in Node JS, HTML manipulation solution pending
     if(search)
     {
 
@@ -102,11 +101,7 @@ app.post('/search', async (req,res) => {
     {
 
     }
-   res.redirect('/searchResults.handlebars');
-});
-// Search Page Getter
-app.get('/searchResults.handlebars', async (req,res) => {
-    res.render("searchResults", { error: "error in loading page"});
+   res.render("searchResults", { search : search});
 });
 
 // Download handler, can't be implemented until HTML manipulation is figured out
