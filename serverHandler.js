@@ -101,11 +101,11 @@ app.post('/search', async (req,res) => {
     {
 
     }
-   res.redirect('/searchResults.html');
+   res.redirect('/searchResults.handlebars');
 });
 // Search Page Getter
-app.get('/searchResults.html', async (req,res) => {
-    res.sendFile(path.join(__dirname + '/searchResults.html'));
+app.get('/searchResults.handlebars', async (req,res) => {
+    res.render("searchResults");
 });
 
 // Download handler, can't be implemented until HTML manipulation is figured out
