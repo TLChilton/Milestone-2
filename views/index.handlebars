@@ -1,24 +1,22 @@
-<!DOCTYPE html>
-<html lang = "en">
 <!-- Authors: Naomi Ceniceros, Callie Houlihan, Scott Lynch, Thomas Chilton -->
-<head>
-    <meta charset="utf-8" />
-    <link href="https://fonts.googleapis.com/css?family=Lato|Montserrat&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles.css" />
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <title> PDFHub </title>
-</head>
-<body>
+
+{{#if error}}
+<div class="error">
+  <span style="color: red">{{message}}</span>
+</div>
+{{/if}}
     <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
          <ul class="nav navbar-nav">
-          <li class="active"> <a href="index.html"><img src="logo2.png" width="110px"/> </a>
-          <a class="button" href="about.html"> About </a>
-          <a class="button" href="createAccount.html"> Create an Account </a>
-          <a class="button" href="howtoUse.html"> How to Use PDF Hub </a>
+          <li class="active"> <a href="index.handlebars"><img src="logo2.png" width="110px"/> </a>
+          <a class="button" href="about.handlebars"> About </a>
+          <a class="button" href="createAccount.handlebars"> Create an Account </a>
+          <a class="button" href="howtoUse.handlebars"> How to Use PDF Hub </a>
           <a class="button" href="myLibrary.handleBars"> My Library </a>
+          {{#if user}}
+          <a class = "button"> Welcome {{user.firstName}}</a> 
+          {{else}}
           <a class="button" onclick="openForm()"> Login </a>
               <script>
                   function openForm(){
@@ -28,6 +26,7 @@
                       document.getElementById("popupForm").style.display="none";
                   }
               </script>
+          {{/if}}
           
         </ul>
     </div>
@@ -63,5 +62,7 @@
         </form> 
     </div>
 
+<!--
 </body>
 </html>
+-->

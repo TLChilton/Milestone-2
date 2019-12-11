@@ -21,6 +21,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(cookieParser());
 
+// Authorization token handler
 const authorize = async (req, res, next) => {
   const db = await dbPromise;
   const token = req.cookies.authToken;
@@ -39,10 +40,9 @@ const authorize = async (req, res, next) => {
   }
 
   const user = await db.get(
-    "SELECT email, id FROM users WHERE id=?",
+    "SELECT email, id, firstName FROM users WHERE id=?",
     authToken.userId
   );
-  console.log("user from authorize", user);
 
   req.user = user;
   next();
@@ -50,20 +50,21 @@ const authorize = async (req, res, next) => {
 
 app.use(authorize);
 
-app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname + '/index.html'));
+// Handles page navigation
+app.get('/', async (req, res) => {
+    res.render("index", {user: req.user});
 });
-app.get('/about.html', function(req, res) {
-    res.sendFile(path.join(__dirname + '/about.html'));
+app.get('/about.handlebars', function(req, res) {
+    res.render("about", {user: req.user});
 });
-app.get('/createAccount.html', function(req, res) {
-    res.sendFile(path.join(__dirname + '/createAccount.html'));
+app.get('/createAccount.handlebars', function(req, res) {
+    res.render("createAccount", {user: req.user});
 });
-app.get('/howToUse.html', function(req, res) {
-    res.sendFile(path.join(__dirname + '/howToUse.html'));
+app.get('/howToUse.handlebars', function(req, res) {
+    res.render("howToUse", {user: req.user});
 });
-app.get('/index.html', function(req, res) {
-    res.sendFile(path.join(__dirname + '/index.html'));
+app.get('/index.handlebars', function(req, res) {
+    res.render("index", {user: req.user});
 });
 // Special library access handler checks to see if someone is an authorized user
 app.get('/myLibrary.handlebars', async (req, res) => {
@@ -79,7 +80,7 @@ app.get('/myLibrary.handlebars', async (req, res) => {
     }
     else
     {
-        res.render("myLibrary", { error: "error in loading page" });
+        res.render("myLibrary", {authToken: authToken});
     }
 });
 
