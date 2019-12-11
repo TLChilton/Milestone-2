@@ -11,13 +11,17 @@ const uuidv4 = require("uuid/v4");
 const port = 3000
 const app = express();
 
-//app.engine('html', require('ejs').__express);
+// Handlebars setup
+const exphbs = require ("express-handlebars");
+app.engine('handlebars', exphbs());
+app.set('view engine', 'handlebars');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(cookieParser());
 
+// Authorization token handler
 const authorize = async (req, res, next) => {
   const db = await dbPromise;
   const token = req.cookies.authToken;
@@ -36,10 +40,9 @@ const authorize = async (req, res, next) => {
   }
 
   const user = await db.get(
-    "SELECT email, id FROM users WHERE id=?",
+    "SELECT email, id, firstName FROM users WHERE id=?",
     authToken.userId
   );
-  console.log("user from authorize", user);
 
   req.user = user;
   next();
@@ -47,36 +50,31 @@ const authorize = async (req, res, next) => {
 
 app.use(authorize);
 
-app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname + '/index.html'));
+// Handles page navigation
+app.get('/', async (req, res) => {
+    res.render("index", {user: req.user});
 });
-app.get('/about.html', function(req, res) {
-    res.sendFile(path.join(__dirname + '/about.html'));
+app.get('/about', function(req, res) {
+    res.render("about", {user: req.user});
 });
-app.get('/createAccount.html', function(req, res) {
-    res.sendFile(path.join(__dirname + '/createAccount.html'));
+app.get('/createAccount', function(req, res) {
+    res.render("createAccount", {user: req.user});
 });
-app.get('/howToUse.html', function(req, res) {
-    res.sendFile(path.join(__dirname + '/howToUse.html'));
+app.get('/howToUse', function(req, res) {
+    res.render("howToUse", {user: req.user});
 });
-app.get('/index.html', function(req, res) {
-    res.sendFile(path.join(__dirname + '/index.html'));
+app.get('/index', function(req, res) {
+    res.render("index", {user: req.user});
 });
-// Special library handler checks to see if someone is an authorized user
-app.get('/myLibrary.html', async (req, res) => {
-    const db = await dbPromise;
-    const token = req.cookies.authToken;
-    const authToken = await db.get(
-        "SELECT * FROM authTokens WHERE token=?",
-        token
-      );
-    if (!authToken)
+// Special library access handler checks to see if someone is an authorized user
+app.get('/myLibrary', function(req, res) {
+    if (!req.user)
     {
         res.sendFile(path.join(__dirname + '/noLogin.html'));
     }
     else
     {
-        res.sendFile(path.join(__dirname + '/myLibrary.html'));
+        res.render("myLibrary", {user: req.user});
     }
 });
 
@@ -90,27 +88,14 @@ app.post('/search', async (req,res) => {
         req.body.search
     );
     console.log(search);
-    // DOM does not work in Node JS, HTML manipulation solution pending
-    if(search)
-    {
-
-    }
-    else
-    {
-
-    }
-   res.redirect('/searchResults.html');
-});
-// Search Page Getter
-app.get('/searchResults.html', async (req,res) => {
-    res.sendFile(path.join(__dirname + '/searchResults.html'));
+   res.render("searchResults", { search : search});
 });
 
-// Download handler, can't be implemented until HTML manipulation is figured out
-/*
-app.get('/download', async(req, res) => {
-    res.download(path.join(__dirname + '/public/pdfs' + ));
-});*/
+// Download Handler
+app.post('/download', async(req, res) => {
+    const fileName = req.body.fileName;
+    res.download(path.join(__dirname + '/public/pdfs/' + fileName));
+});
 
 // User Creation
 app.post('/create', async (req, res) => {

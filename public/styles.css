@@ -101,19 +101,18 @@ b:hover {
   text-align: center;
   width: 100%;
 }
-
 .form-popup{
   display: none;
   position: fixed;
-  left: 1100px;
-  bottom: 705px;
+  left: 1000px;
+  bottom: 550px;
   transform: translate(-200px, 400px);
   border: none;
   z-index: 9;
 }
 
 .form-container{
-  max-width: 300px;
+  max-width: 600px;
   padding: 20px;
   background-color: rgb(86,102,107);
 }
@@ -173,6 +172,8 @@ font-size: 18px;
 }
 @media screen and (max-width: 767px) {
     .sidenav {
+      display: flex;
+      flex-wrap: wrap
       height: auto;
       padding: 15px;
     }
@@ -236,9 +237,9 @@ padding: 30px;
 }
 
 .column-container{
-width: 120px;
-height: 150px;
-padding: 9px;
+width: 130px;
+height: 170px;
+margin: 6px;
 background-color: white;
 }
 
@@ -294,29 +295,30 @@ width: 80%;
 /* Search bar on other pages (top right) */
 .search-bar2{
 position: absolute;
-top: 20%;
-right: 3.5%;
-width: 25%;
+top: 15%;
+right: 2%;
+width: 20%;
 }
 .search-bar2 input[type=text] {
-padding: 8px;
+padding: 4%;
 border: none;
-font-size: 16px;
+font-size: 14px;
 }
 .input2{
-height: 10%;
+height: 7%;
 width: 80%;
 }
 .input2::placeholder{
 font-family: 'Montserrat' ;
-font-size: 16px;
+font-size: 14px;
 }
 .search-icon2 {
   position: absolute;
   outline: none;
   background-color: #E7BB41;
-  padding-top: 0.8%;
-  padding-bottom: 1.6%;
+  padding-top: 1.2%;
+  padding-bottom: 4%;
+  width: 15%;
 }
 
 
@@ -334,16 +336,26 @@ background:
 height: 15%;
 width: 20%;
 }
+.accnt-container{
+  position: absolute;
+  left: 24.5%;
+  max-width: 750px;
+  padding: 20px;
+  background-color: white;
+} 
+  .accnt-container input[type=text], .accnt-container input[type=password]{
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #eee;
+    font-size: 18px;
+  }
+
 .form-accnt::placeholder{
-font-family: 'Montserrat' ;
-font-size: 16px;
+  font-size: 16px;
 }
-.form-accnt input[type=text] {
-padding: 10px;
-border: none;
-font-size: 16px;
-font-family: 'Montserrat';
-}
+
 .submit-button {
 border: none;
 padding: 8px 22px;
@@ -373,5 +385,53 @@ color: #E7BB41;
 
 /* Background color for titles on pages */
 .jumbotron.text-center{
-background-color: #2D3047;
+  background-color: #2D3047;
+}
+
+.nologin-popup{
+  background-color: #2D3047;
+  height: 720px;
+  padding: 20%;
+  text-align: center;
+}
+
+/* Rating System */
+*{
+  margin: 0;
+  padding: 0;
+}
+.rate {
+  float: left;
+  height: 46px;
+  padding: 0 10px;
+}
+.rate:not(:checked) > input {
+  position:absolute;
+  top:-9999px;
+}
+.rate:not(:checked) > label {
+  float:right;
+  width:1em;
+  overflow:hidden;
+  white-space:nowrap;
+  cursor:pointer;
+  font-size:30px;
+  color:#2D3047;
+}
+.rate:not(:checked) > label:before {
+  content: '★ ';
+}
+.rate > input:checked ~ label {
+  color: #E7BB41;    
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+  color: #E7BB41;  
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+  color: #E7BB41;
 }

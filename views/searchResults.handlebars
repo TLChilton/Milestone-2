@@ -1,0 +1,37 @@
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+      <ul class="nav navbar-nav">
+        <li class="active"> <a href="index"><img src="logo2.png" width="110px"/> </a>
+        <a class="button" href="about"> About </a>
+        <a class="button" href="createAccount"> Create an Account </a>
+        <a class="button" href="howtoUse"> How to Use PDF Hub </a>
+        <a class="button" href="myLibrary"> My Library </a>
+        <form class="search-bar2" action="/search" method="POST">
+          <input class="input2" type="text" placeholder="Search for Textbook by ISBN/Title" name="search">
+          <button class="search-icon2"><img src="magnifying_glass.png" width="20px"/></button>
+      </form> 
+      </ul>
+      </div>
+  </div>
+</nav>
+
+  <div class="jumbotron text-center">
+    <h1> <img src="logo2.png" width="300px" /> </h1>
+  </div>
+    <div class="container">
+        {{#if search}}
+        <p id="isbn"> {{search.isbn}} </p>
+        <h3 id="title"> {{search.title}} </h3>
+        <p id="author"> {{search.author}} </p>
+        <!-- and then this download method will use the file name from SQL -->
+        <form action="/download" method="POST">
+          <input type="hidden" name="fileName" value={{search.fileName}} />
+          <button class="submit-button">Download Here</button>
+        </form>
+        {{else}}
+        <div class = "error">
+          <span style="color: red">No Results Found</span>
+        </div>
+        {{/if}}
+    </div>
