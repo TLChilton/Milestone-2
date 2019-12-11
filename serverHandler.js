@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const sqlite = require("sqlite");
 const express = require('express');
+const exphbs = require ("express-handlebars");
 const dbPromise = sqlite.open("./data.sqlite");
 const cookieParser = require("cookie-parser");
 const uuidv4 = require("uuid/v4");
@@ -11,7 +12,8 @@ const uuidv4 = require("uuid/v4");
 const port = 3000
 const app = express();
 
-//app.engine('html', require('ejs').__express);
+app.engine("handlebars", exphbs());
+app.set("view engine", "handlebars");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -63,7 +65,7 @@ app.get('/index.html', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
 });
 // Special library handler checks to see if someone is an authorized user
-app.get('/myLibrary.html', async (req, res) => {
+app.get('/myLibrary.handlebars', async (req, res) => {
     const db = await dbPromise;
     const token = req.cookies.authToken;
     const authToken = await db.get(
@@ -76,7 +78,7 @@ app.get('/myLibrary.html', async (req, res) => {
     }
     else
     {
-        res.sendFile(path.join(__dirname + '/myLibrary.html'));
+        res.render("myLibrary");
     }
 });
 
