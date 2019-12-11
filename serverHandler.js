@@ -54,33 +54,27 @@ app.use(authorize);
 app.get('/', async (req, res) => {
     res.render("index", {user: req.user});
 });
-app.get('/about.handlebars', function(req, res) {
+app.get('/about', function(req, res) {
     res.render("about", {user: req.user});
 });
-app.get('/createAccount.handlebars', function(req, res) {
+app.get('/createAccount', function(req, res) {
     res.render("createAccount", {user: req.user});
 });
-app.get('/howToUse.handlebars', function(req, res) {
+app.get('/howToUse', function(req, res) {
     res.render("howToUse", {user: req.user});
 });
-app.get('/index.handlebars', function(req, res) {
+app.get('/index', function(req, res) {
     res.render("index", {user: req.user});
 });
 // Special library access handler checks to see if someone is an authorized user
-app.get('/myLibrary.handlebars', async (req, res) => {
-    const db = await dbPromise;
-    const token = req.cookies.authToken;
-    const authToken = await db.get(
-        "SELECT * FROM authTokens WHERE token=?",
-        token
-      );
-    if (!authToken)
+app.get('/myLibrary', function(req, res) {
+    if (!req.user)
     {
         res.sendFile(path.join(__dirname + '/noLogin.html'));
     }
     else
     {
-        res.render("myLibrary", {authToken: authToken});
+        res.render("myLibrary", {user: req.user});
     }
 });
 
