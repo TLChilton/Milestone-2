@@ -104,11 +104,10 @@ app.post('/search', async (req,res) => {
    res.render("searchResults", { search : search});
 });
 
-// Download handler, can't be implemented until HTML manipulation is figured out
-/*
-app.get('/download', async(req, res) => {
-    res.download(path.join(__dirname + '/public/pdfs' + ));
-});*/
+app.post('/download', async(req, res) => {
+    const fileName = req.body.fileName;
+    res.download(path.join(__dirname + '/public/pdfs/' + fileName));
+});
 
 // User Creation
 app.post('/create', async (req, res) => {

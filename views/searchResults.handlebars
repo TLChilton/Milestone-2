@@ -20,15 +20,16 @@
   <div class="jumbotron text-center">
     <h1> <img src="logo2.png" width="300px" /> </h1>
   </div>
-  <!-- This is super proto and I don't know exactly what i'm doing-->
     <div class="container">
-        <!-- I'm thinking these p's can be manipulated in the js -->
         {{#if search}}
         <p id="isbn"> {{search.isbn}} </p>
         <h3 id="title"> {{search.title}} </h3>
         <p id="author"> {{search.author}} </p>
         <!-- and then this download method will use the file name from SQL -->
-        <form action="/download1" method="GET"><button class="submit-button">Download Here</button></form>
+        <form action="/download" method="POST">
+          <input type="hidden" name="fileName" value={{search.fileName}} />
+          <button class="submit-button">Download Here</button>
+        </form>
         {{else}}
         <div class = "error">
           <span style="color: red">No Results Found</span>
