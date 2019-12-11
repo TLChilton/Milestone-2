@@ -65,7 +65,7 @@ app.get('/howToUse.html', function(req, res) {
 app.get('/index.html', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
 });
-// Special library handler checks to see if someone is an authorized user
+// Special library access handler checks to see if someone is an authorized user
 app.get('/myLibrary.handlebars', async (req, res) => {
     const db = await dbPromise;
     const token = req.cookies.authToken;
@@ -93,17 +93,10 @@ app.post('/search', async (req,res) => {
         req.body.search
     );
     console.log(search);
-    if(search)
-    {
-
-    }
-    else
-    {
-
-    }
    res.render("searchResults", { search : search});
 });
 
+// Download Handler
 app.post('/download', async(req, res) => {
     const fileName = req.body.fileName;
     res.download(path.join(__dirname + '/public/pdfs/' + fileName));
@@ -158,23 +151,6 @@ app.post('/login', async (req, res) => {
         res.redirect("/");
     }
    
-});
-
-// Proto download handler, will be implemented more intelligently later
-app.get('/download1', async (req, res) => {
-    res.download(path.join(__dirname + '/public/pdfs/frankenstein.pdf'));
-});
-app.get('/download2', async (req, res) => {
-    res.download(path.join(__dirname + '/public/pdfs/Moby_Dick.pdf'));
-});
-app.get('/download3', async (req, res) => {
-    res.download(path.join(__dirname + '/public/pdfs/modestproposal.pdf'));
-});
-app.get('/download4', async (req, res) => {
-    res.download(path.join(__dirname + '/public/pdfs/dracula.pdf'));
-});
-app.get('/download5', async (req, res) => {
-    res.download(path.join(__dirname + '/public/pdfs/The_Scarlet_Letter.pdf'));
 });
 
 // Final server setup 
