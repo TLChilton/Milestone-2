@@ -1,18 +1,4 @@
-<!--
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <link href="https://fonts.googleapis.com/css?family=Lato|Montserrat&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles.css" />
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <title> PDFHub </title>
-</head>
-<body>
-  !-->
-
-{{#if message}}
+{{#if error}}
   <div class="error">
     <span style="color: red">{{message}}</span>
   </div>
@@ -48,7 +34,3 @@
         <!-- and then this download method will use the file name from SQL -->
         <form action="/download1" method="GET"><button class="submit-button">Download Here</button></form>
     </div>
-  <!--
-</body>
-</html>
-!-->

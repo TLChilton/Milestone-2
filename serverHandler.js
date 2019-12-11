@@ -79,7 +79,7 @@ app.get('/myLibrary.handlebars', async (req, res) => {
     }
     else
     {
-        res.render("myLibrary", { message: "error in loading page" });
+        res.render("myLibrary", { error: "error in loading page" });
     }
 });
 
@@ -106,7 +106,7 @@ app.post('/search', async (req,res) => {
 });
 // Search Page Getter
 app.get('/searchResults.handlebars', async (req,res) => {
-    res.render("searchResults", { message: "error in loading page"});
+    res.render("searchResults", { error: "error in loading page"});
 });
 
 // Download handler, can't be implemented until HTML manipulation is figured out
