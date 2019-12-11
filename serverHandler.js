@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const sqlite = require("sqlite");
 const express = require('express');
-const exphbs = require ("express-handlebars");
 const dbPromise = sqlite.open("./data.sqlite");
 const cookieParser = require("cookie-parser");
 const uuidv4 = require("uuid/v4");
@@ -12,8 +11,10 @@ const uuidv4 = require("uuid/v4");
 const port = 3000
 const app = express();
 
-app.engine("handlebars", exphbs());
-app.set("view engine", "handlebars");
+// Handlebars setup
+const exphbs = require ("express-handlebars");
+app.engine('handlebars', exphbs());
+app.set('view engine', 'handlebars');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -78,7 +79,7 @@ app.get('/myLibrary.handlebars', async (req, res) => {
     }
     else
     {
-        res.render("myLibrary");
+        res.render("myLibrary", { message: "error in loading page" });
     }
 });
 
@@ -105,7 +106,7 @@ app.post('/search', async (req,res) => {
 });
 // Search Page Getter
 app.get('/searchResults.handlebars', async (req,res) => {
-    res.render("searchResults");
+    res.render("searchResults", { message: "error in loading page"});
 });
 
 // Download handler, can't be implemented until HTML manipulation is figured out

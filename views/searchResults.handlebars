@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +10,13 @@
     <title> PDFHub </title>
 </head>
 <body>
+  !-->
+
+{{#if message}}
+  <div class="error">
+    <span style="color: red">{{message}}</span>
+  </div>
+{{/if}}
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -40,5 +48,7 @@
         <!-- and then this download method will use the file name from SQL -->
         <form action="/download1" method="GET"><button class="submit-button">Download Here</button></form>
     </div>
+  <!--
 </body>
 </html>
+!-->
