@@ -122,10 +122,10 @@ app.post('/myLibrary', async (req, res) => {
 app.post('/search', async (req,res) => {
     const db = await dbPromise;
     const search = await db.get(
-        "SELECT * FROM pdfs WHERE isbn =? OR author =? OR title=?", 
+        "SELECT * FROM pdfs WHERE isbn =? OR upper(author) =? OR upper(title)=?", 
         req.body.search,
-        req.body.search,
-        req.body.search
+        req.body.search.toUpperCase(),
+        req.body.search.toUpperCase()
     );
     console.log(search);
    res.render("searchResults", { search : search});

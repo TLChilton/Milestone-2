@@ -37,14 +37,6 @@ VALUES
   (9781118324561, "Probability and Stochastic Processes", "Roy Yates", "Prob_Stochastic_Processes.pdf"),
   (9781292096131, "Software Engineering, 10th Edition", "Ian Sommerville", "Software_Engineering.pdf");
   
-
-/*
-INSERT OR IGNORE INTO pdfs (title, author, fileName)
-VALUES
-  ("Dracula", "Bram Stoker", "dracula.pdf"),
-  ("Moby Dick", "Herman Melville", "Moby_Dick.pdf"),
-  ("A Modest Proposal", "Jonathan Swift", "modestproposal.pdf");
-*/
 -- Down
 -- DROP TABLE users;
 -- DROP TABLE pdfs;
