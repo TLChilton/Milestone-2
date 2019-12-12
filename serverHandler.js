@@ -79,12 +79,11 @@ app.get('/myLibrary', async (req, res) => {
         library = await db.all(
             "SELECT * FROM pdfs ORDER BY title ASC"
         );
-
-        console.log(library);
         res.render("myLibrary", {user: req.user, library: library});
 
     }
-})
+});
+// Version of library handler with sorting options
 app.post('/myLibrary', async (req, res) => {
     const db = await dbPromise;
     if (!req.user)
@@ -114,7 +113,6 @@ app.post('/myLibrary', async (req, res) => {
                 "SELECT * FROM pdfs ORDER BY title ASC"
             );
         }
-        console.log(library);
         res.render("myLibrary", {user: req.user, library: library});
     }
 });
@@ -188,6 +186,13 @@ app.post('/login', async (req, res) => {
         res.redirect("/");
     }
    
+});
+
+// Logout handler
+// TODO
+app.get('/logout', function (req, res) {
+    req.logout();
+    res.redirect("/");
 });
 
 // Final server setup 
