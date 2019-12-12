@@ -146,7 +146,7 @@ app.post('/myLibraryRating', async (req, res) => {
             req.body.book
         );
     }
-
+    res.redirect("/myLibrary");
 });
 
 
@@ -170,6 +170,7 @@ app.post('/searchRating', async (req, res) => {
         "SELECT reviews, numReviews FROM pdfs WHERE isbn = ?",
         req.body.book
     );
+    console.log(reviews);
     if (reviews.numReviews = 0)
     {
         await db.run(`UPDATE pdfs 

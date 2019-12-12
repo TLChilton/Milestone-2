@@ -29,7 +29,7 @@
           <input type="hidden" name="fileName" value={{search.fileName}} />
           <button class="submit-button">Download Here</button>
         </form>
-        <form name = "rating">
+        <form name = "rating" action="/searchRating" method="POST">
           <div class="rate">
               <input type="hidden" name="book" value={{search.isbn}} />
               <input type="radio" id="star5" name="rate" value="5" />
