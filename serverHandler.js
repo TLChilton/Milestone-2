@@ -118,20 +118,24 @@ app.post('/myLibrary', async (req, res) => {
 });
 app.post('/myLibraryRating', async (req, res) => {
     const db = await dbPromise;
-    const rating = req.body.rating;
+    const rating = parseInt(req.body.rate, 10);
     const review = await db.get(
-        "SELECT reviews, numReviews FROM pdfs WHERE isbn = ?",
+        "SELECT reviews, numReviews, average FROM pdfs WHERE isbn = ?",
         req.body.book
     );
-    const average = (review.reviews + rating)/(review.numReviews + 1);
+    const sum = review.reviews + rating;
+    const numReviews = review.numReviews + 1;
+    const average = sum/numReviews;
     await db.run(`UPDATE pdfs
         SET
             reviews = ?,
-            numReviews = ?
+            numReviews = ?,
+            average = ?
         WHERE
             isbn = ?`,
+        sum,
+        numReviews,
         average,
-        (review.numReviews + 1),
         req.body.book
     );
     res.redirect("/myLibrary");
@@ -152,22 +156,24 @@ app.post('/search', async (req,res) => {
 });
 app.post('/searchRating', async (req, res) => {
     const db = await dbPromise;
-    const search = req.body.search;
-    const rating = req.body.rate;
+    const rating = parseInt(req.body.rate, 10);
     const review = await db.get(
-        "SELECT reviews, numReviews FROM pdfs WHERE isbn = ?",
+        "SELECT reviews, numReviews, average FROM pdfs WHERE isbn = ?",
         req.body.book
     );
-    const average = (review.reviews + rating)/(review.numReviews + 1);
-    console.log(average);
+    const sum = review.reviews + rating;
+    const numReviews = review.numReviews + 1;
+    const average = sum/numReviews;
     await db.run(`UPDATE pdfs
         SET
             reviews = ?,
-            numReviews = ?
+            numReviews = ?,
+            average = ?
         WHERE
             isbn = ?`,
+        sum,
+        numReviews,
         average,
-        (review.numReviews + 1),
         req.body.book
     );
 });

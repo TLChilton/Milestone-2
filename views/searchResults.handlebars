@@ -24,7 +24,7 @@
         <h3 id="title"> {{search.title}} </h3>
         <p id="isbn"> ISBN: {{search.isbn}} </p>
         <p id="author"> Author: {{search.author}} </p>
-        <p id= "review"> Average Review: {{search.reviews}} </p>
+        <p id= "review"> Average Review: {{search.average}} </p>
         <!-- and then this download method will use the file name from SQL -->
         <form action="/download" method="POST">
           <input type="hidden" name="fileName" value={{search.fileName}} />
