@@ -383,6 +383,33 @@ color: white;
 color: #E7BB41;
 }
 
+.submit-button2 {
+  border: none;
+  padding: 8px 11px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background-color: #2D3047;
+  color: white;
+  }
+  .submit-button2:link {
+  text-decoration: none;
+  color: white;
+  }
+  
+  .submit-button2:visited {
+  text-decoration: none;
+  color: white;
+  }
+  
+  .submit-button2:hover {
+  color: #E7BB41;
+  }
+
 /* Background color for titles on pages */
 .jumbotron.text-center{
   background-color: #2D3047;

@@ -31,12 +31,13 @@ VALUES
   (1575210304, "Teach Yourself Java in 21 Days", "Laura Lemay", "LearnJava.pdf");
   
 
+/*
 INSERT OR IGNORE INTO pdfs (title, author, fileName)
 VALUES
   ("Dracula", "Bram Stoker", "dracula.pdf"),
   ("Moby Dick", "Herman Melville", "Moby_Dick.pdf"),
   ("A Modest Proposal", "Jonathan Swift", "modestproposal.pdf");
-
+*/
 -- Down
 -- DROP TABLE users;
 -- DROP TABLE pdfs;

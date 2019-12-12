@@ -66,15 +66,21 @@ app.get('/howToUse', function(req, res) {
 app.get('/index', function(req, res) {
     res.render("index", {user: req.user});
 });
+
 // Special library access handler checks to see if someone is an authorized user
-app.get('/myLibrary', function(req, res) {
+app.get('/myLibrary', async (req, res) => {
+    const db = await dbPromise;
     if (!req.user)
     {
         res.sendFile(path.join(__dirname + '/noLogin.html'));
     }
     else
     {
-        res.render("myLibrary", {user: req.user});
+        const library = await db.all(
+            "SELECT * FROM pdfs"
+        );
+        console.log(library);
+        res.render("myLibrary", {user: req.user, library: library});
     }
 });
 
@@ -92,7 +98,7 @@ app.post('/search', async (req,res) => {
 });
 
 // Download Handler
-app.post('/download', async(req, res) => {
+app.post('/download', function (req, res) {
     const fileName = req.body.fileName;
     res.download(path.join(__dirname + '/public/pdfs/' + fileName));
 });
@@ -146,23 +152,6 @@ app.post('/login', async (req, res) => {
         res.redirect("/");
     }
    
-});
-
-// Proto download handler, will be implemented more intelligently later
-app.get('/download1', async (req, res) => {
-    res.download(path.join(__dirname + '/public/frankenstein.pdf'));
-});
-app.get('/download2', async (req, res) => {
-    res.download(path.join(__dirname + '/public/Moby_Dick.pdf'));
-});
-app.get('/download3', async (req, res) => {
-    res.download(path.join(__dirname + '/public/modestproposal.pdf'));
-});
-app.get('/download4', async (req, res) => {
-    res.download(path.join(__dirname + '/public/dracula.pdf'));
-});
-app.get('/download5', async (req, res) => {
-    res.download(path.join(__dirname + '/public/The_Scarlet_Letter.pdf'));
 });
 
 // Final server setup 

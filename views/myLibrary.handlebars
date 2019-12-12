@@ -1,4 +1,4 @@
-﻿        <nav class="navbar navbar-inverse">
+﻿  <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
        <ul class="nav navbar-nav">
@@ -16,10 +16,11 @@
   </div>
 </nav>
 
+<!--
 <div class="jumbotron text-center">
     <h1> My Library <br /> </h1>
   </div>
-  <div class="container">
+    <div class="container">
       <div class="row">
           <nav class="navbar navbar-inverse">
               <div class="container-fluid">
@@ -36,8 +37,8 @@
     <div class="row">
       <div class="column">
           <p style="text-align: center;"> frankenstein.pdf </p> 
-          <div class="column-container" >  <!-- Downloads handled in serverHandler.js (TC) -->
-            <form action="/download1" method="GET"><button><width="100px"> </button></form>
+          <div class="column-container" > 
+            <form action="/download" method="GET"><button><width="100px"> </button></form>
         </div>
         <div class="row">
           <div class="rate">
@@ -134,17 +135,61 @@
                 </div>
               </div>
         </div>
-  <!--
+  
         <div class = "pagination">
           <a href = "#" > &laquo;</a>
           <a  class = "active" href = "#" > 1 </a>
           <a href = "#" > 2 </a>
           <a href = "#" > &raquo;</a>
         </div> 
-      -->
+      
     </div>
     <div class="row">
     </div>
   </div>
+  -->
+
+  <div class="jumbotron text-center">
+    <h1> My Library <br /> </h1>
+  </div>
+  <div class="container">
+      <div class="row">
+          <nav class="navbar navbar-inverse">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                   <ul class="nav navbar-nav">
+                    <li class="active"> <b class="button-setting" onclick="" > Sort By Title </b>
+                      <b class="button-setting" onclick="" > Sort by Author </b>
+                      <b class="button-setting" onclick="" > Sort by ISBN </b>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+      </div>
+    <div class="container">
+        {{#each library}}
+          <p>Title: {{this.title}} ISBN: {{this.isbn}} Author: {{this.author}} 
+            <form action="/download" method="POST">
+              <input type="hidden" name="fileName" value={{this.fileName}} />
+              <button class="submit-button2">Download Here</button>
+            </form>
+            <div class="rate">
+                  <input type="radio" id="star5" name="rate" value="5" />
+                    <label for="star5" title="text">5 stars</label>
+                  <input type="radio" id="star4" name="rate" value="4" />
+                    <label for="star4" title="text">4 stars</label>
+                  <input type="radio" id="star3" name="rate" value="3" />
+                    <label for="star3" title="text">3 stars</label>
+                  <input type="radio" id="star2" name="rate" value="2" />
+                    <label for="star2" title="text">2 stars</label>
+                  <input type="radio" id="star1" name="rate" value="1" />
+                    <label for="star1" title="text">1 star</label>
+                </div>
+          </p>
+          <br /> <br />
+        {{/each}}
+        
+    </div>
+
   
   
