@@ -118,11 +118,12 @@ app.post('/myLibrary', async (req, res) => {
 });
 app.post('/myLibraryRating', async (req, res) => {
     const db = await dbPromise;
-    const rating = parseInt(req.body.rate, 10);
+    const rating = parseInt(req.body.rating, 10);
     const review = await db.get(
         "SELECT reviews, numReviews, average FROM pdfs WHERE isbn = ?",
         req.body.book
     );
+    console.log(review);
     const sum = review.reviews + rating;
     const numReviews = review.numReviews + 1;
     const average = sum/numReviews;
@@ -141,18 +142,36 @@ app.post('/myLibraryRating', async (req, res) => {
     res.redirect("/myLibrary");
 });
 
+// User Page
+app.get('/userPage', async (req,res) => {
+    const db = await dbPromise;
+    const downloads = await db.all("SELECT * FROM downloads WHERE userId = ?",
+        req.user.id
+    );
+    console.log(downloads);
+    res.render("userPage", {user: req.user, downloads: downloads});
+});
 
 // Search Request Handler
 app.post('/search', async (req,res) => {
     const db = await dbPromise;
-    const search = await db.get(
-        "SELECT * FROM pdfs WHERE isbn =? OR upper(author) =? OR upper(title)=?", 
-        req.body.search,
-        req.body.search.toUpperCase(),
-        req.body.search.toUpperCase()
-    );
-    console.log(search);
-   res.render("searchResults", { search : search});
+    if (!req.user)
+    {
+        res.sendFile(path.join(__dirname + '/noLogin.html'));
+        
+    }
+    else
+    {
+        const search = await db.get(
+            "SELECT * FROM pdfs WHERE isbn =? OR upper(author) =? OR upper(title)=?", 
+            req.body.search,
+            req.body.search.toUpperCase(),
+            req.body.search.toUpperCase()
+        );
+        console.log(search);
+        const reviewsExist = new Boolean(search.numReviews > 0);
+        res.render("searchResults", { search : search, reviewsExist: reviewsExist});
+    }
 });
 app.post('/searchRating', async (req, res) => {
     const db = await dbPromise;
@@ -161,6 +180,7 @@ app.post('/searchRating', async (req, res) => {
         "SELECT reviews, numReviews, average FROM pdfs WHERE isbn = ?",
         req.body.book
     );
+    console.log(review);
     const sum = review.reviews + rating;
     const numReviews = review.numReviews + 1;
     const average = sum/numReviews;
@@ -179,8 +199,23 @@ app.post('/searchRating', async (req, res) => {
 });
 
 // Download Handler
-app.post('/download', function (req, res) {
+app.post('/download', async (req, res) => {
+    const db = await dbPromise;
     const fileName = req.body.fileName;
+    const exists = await db.get(`SELECT * FROM downloads
+        WHERE 
+            userId = ?
+        AND
+            download = ?`,
+        req.user.id,
+        fileName);
+    if(!exists)
+    {
+        await db.run("INSERT INTO downloads (userId, download) VALUES (?, ?);",
+            req.user.id,
+            fileName
+        );
+    }
     res.download(path.join(__dirname + '/public/pdfs/' + fileName));
 });
 

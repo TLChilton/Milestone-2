@@ -6,7 +6,7 @@
           <a class="button" href="about"> About </a>
           <a class="button" href="createAccount"> Create an Account </a>
           <a class="button" href="howtoUse"> How to Use PDF Hub </a>
-          <a class="button" href="myLibrarybyTitle"> My Library </a>
+          <a class="button" href="myLibrary"> My Library </a>
       </ul>
     </div>
     <form class="search-bar2" action="/search" method="POST">
@@ -64,27 +64,29 @@
               <button class="submit-button2">Download Here</button>
             </form>
           </div>
+          {{#if this.numReviews}}
           <div class = "row">
             Average Review: {{this.average}}
           </div>
-          <div class = "row">
+          {{/if}}
           <form name = "rating" action="/myLibraryRating" method="POST">
+          <div class = "row">
             <div class="rate">
                   <input type="hidden" name="book" value={{this.isbn}} />
-                  <input type="radio" id="star5" name="rate" value="5" />
-                    <label for="star5" title="text">5 stars</label>
-                  <input type="radio" id="star4" name="rate" value="4" />
-                    <label for="star4" title="text">4 stars</label>
-                  <input type="radio" id="star3" name="rate" value="3" />
-                    <label for="star3" title="text">3 stars</label>
-                  <input type="radio" id="star2" name="rate" value="2" />
-                    <label for="star2" title="text">2 stars</label>
-                  <input type="radio" id="star1" name="rate" value="1" />
-                    <label for="star1" title="text">1 star</label>
+                  <input type="radio" id="star5{{this.isbn}}" name="rate{{this.isbn}}" value="5" />
+                    <label for="star5{{this.isbn}}" title="text">5 stars</label>
+                  <input type="radio" id="star4{{this.isbn}}" name="rate{{this.isbn}}" value="4" />
+                    <label for="star4{{this.isbn}}" title="text">4 stars</label>
+                  <input type="radio" id="star3{{this.isbn}}" name="rate{{this.isbn}}" value="3" />
+                    <label for="star3{{this.isbn}}" title="text">3 stars</label>
+                  <input type="radio" id="star2{{this.isbn}}" name="rate{{this.isbn}}" value="2" />
+                    <label for="star2{{this.isbn}}" title="text">2 stars</label>
+                  <input type="radio" id="star1{{this.isbn}}" name="rate{{this.isbn}}" value="1" />
+                    <label for="star1{{this.isbn}}" title="text">1 star</label>
                 </div>
-          </form>
           </div>
           <div class="row"><button class="submit-button2">Submit Review</button></div>
+          </form>
           </div>
         {{/each}}
     </div>
