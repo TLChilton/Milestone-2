@@ -119,33 +119,21 @@ app.post('/myLibrary', async (req, res) => {
 app.post('/myLibraryRating', async (req, res) => {
     const db = await dbPromise;
     const rating = req.body.rating;
-    const reviews = await db.get(
+    const review = await db.get(
         "SELECT reviews, numReviews FROM pdfs WHERE isbn = ?",
         req.body.book
     );
-    if (reviews.numReviews = 0)
-    {
-        await db.run(`UPDATE pdfs 
-            SET 
-                reviews = rating,
-                numReviews = 1
-            WHERE
-                isbn = ?`,
-            req.body.book
-        );
-    }
-    else
-    {
-        const average = (reviews.reviews + rating)/(reviews.numReviews + 1);
-        await db.run(`UPDATE pdfs
-            SET
-                reviews = average,
-                numReviews = numReviews + 1
-            WHERE
-                isbn = ?`,
-            req.body.book
-        );
-    }
+    const average = (review.reviews + rating)/(review.numReviews + 1);
+    await db.run(`UPDATE pdfs
+        SET
+            reviews = ?,
+            numReviews = ?
+        WHERE
+            isbn = ?`,
+        average,
+        (review.numReviews + 1),
+        req.body.book
+    );
     res.redirect("/myLibrary");
 });
 
@@ -165,38 +153,23 @@ app.post('/search', async (req,res) => {
 app.post('/searchRating', async (req, res) => {
     const db = await dbPromise;
     const search = req.body.search;
-    const rating = req.body.rating;
-    const reviews = await db.get(
+    const rating = req.body.rate;
+    const review = await db.get(
         "SELECT reviews, numReviews FROM pdfs WHERE isbn = ?",
         req.body.book
     );
-    console.log(reviews);
-    if (reviews.numReviews = 0)
-    {
-        await db.run(`UPDATE pdfs 
-            SET 
-                reviews = rating,
-                numReviews = 1
-            WHERE
-                isbn = ?`,
-            req.body.search
-        );
-    }
-    else
-    {
-        const average = (reviews.reviews + rating)/(reviews.numReviews + 1);
-        await db.run(`UPDATE pdfs
-            SET
-                reviews = ?,
-                numReviews = ?
-            WHERE
-                isbn = ?`,
-            rating,
-            numReviews + 1,
-            req.body.search
-        );
-    }
-
+    const average = (review.reviews + rating)/(review.numReviews + 1);
+    console.log(average);
+    await db.run(`UPDATE pdfs
+        SET
+            reviews = ?,
+            numReviews = ?
+        WHERE
+            isbn = ?`,
+        average,
+        (review.numReviews + 1),
+        req.body.book
+    );
 });
 
 // Download Handler
