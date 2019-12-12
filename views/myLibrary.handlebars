@@ -65,8 +65,9 @@
             </form>
           </div>
           <div class = "row">
-          <form>
+          <form name = "rating">
             <div class="rate">
+                  <input type="hidden" name="book" value={{this.isbn}} />
                   <input type="radio" id="star5" name="rate" value="5" />
                     <label for="star5" title="text">5 stars</label>
                   <input type="radio" id="star4" name="rate" value="4" />

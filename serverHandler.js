@@ -117,6 +117,27 @@ app.post('/myLibrary', async (req, res) => {
     }
 });
 app.post('/myLibraryRating', async (req, res) => {
+    const db = await dbPromise;
+    const rating = req.body.rating;
+    const reviews = await db.get(
+        "SELECT reviews, numReviews FROM pdfs WHERE isbn = ?",
+        req.body.book
+    );
+    if (reviews.numReviews = 0)
+    {
+        await db.run(`UPDATE pdfs 
+            SET 
+                reviews = rating,
+                numReviews = 1
+            WHERE
+                isbn = ?`,
+            req.body.book
+        );
+    }
+    else
+    {
+
+    }
 
 });
 
@@ -134,8 +155,12 @@ app.post('/search', async (req,res) => {
    res.render("searchResults", { search : search});
 });
 app.post('/searchRating', async (req, res) => {
-    
-})
+    const db = await dbPromise;
+    const search = req.body.search;
+    const rating = req.body.rating;
+
+
+});
 
 // Download Handler
 app.post('/download', function (req, res) {
