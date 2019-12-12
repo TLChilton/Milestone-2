@@ -76,13 +76,49 @@ app.get('/myLibrary', async (req, res) => {
     }
     else
     {
-        const library = await db.all(
-            "SELECT * FROM pdfs"
+        library = await db.all(
+            "SELECT * FROM pdfs ORDER BY title ASC"
         );
+
+        console.log(library);
+        res.render("myLibrary", {user: req.user, library: library});
+
+    }
+})
+app.post('/myLibrary', async (req, res) => {
+    const db = await dbPromise;
+    if (!req.user)
+    {
+        res.sendFile(path.join(__dirname + '/noLogin.html'));
+        
+    }
+    else
+    {
+        const sort = req.body.sortType;
+        var library;
+        if(sort == "author")
+        {
+            library = await db.all(
+                "SELECT * FROM pdfs ORDER BY author ASC"
+            );
+        }
+        else if(sort == "isbn")
+        {
+            library = await db.all(
+                "SELECT * FROM pdfs ORDER BY isbn ASC"
+            );
+        }
+        else
+        {
+            library = await db.all(
+                "SELECT * FROM pdfs ORDER BY title ASC"
+            );
+        }
         console.log(library);
         res.render("myLibrary", {user: req.user, library: library});
     }
 });
+
 
 // Search Request Handler
 app.post('/search', async (req,res) => {

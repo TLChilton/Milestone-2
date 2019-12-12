@@ -226,13 +226,19 @@ display: table;
 }
 .column {
 float: left;
-width: 20%;
-padding: 40px;
+width: 33.33%;
+padding: 5px;
 }
 
 .column2{
 float: left;
 width: 33.33%;
+padding: 30px;
+}
+
+.column3 {
+float: left;
+width: 20%;
 padding: 30px;
 }
 

@@ -6,7 +6,7 @@
           <a class="button" href="about"> About </a>
           <a class="button" href="createAccount"> Create an Account </a>
           <a class="button" href="howtoUse"> How to Use PDF Hub </a>
-          <a class="button" href="myLibrary"> My Library </a>
+          <a class="button" href="myLibrarybyTitle"> My Library </a>
       </ul>
     </div>
     <form class="search-bar2" action="/search" method="POST">
@@ -158,21 +158,46 @@
               <div class="container-fluid">
                 <div class="navbar-header">
                    <ul class="nav navbar-nav">
-                    <li class="active"> <b class="button-setting" onclick="" > Sort By Title </b>
-                      <b class="button-setting" onclick="" > Sort by Author </b>
-                      <b class="button-setting" onclick="" > Sort by ISBN </b>
+                    <li class="active">
+                      <div class = "row">
+                        <div class="column">
+                          <form action="/myLibrary" method="POST">
+                            <input type="hidden" name="sortType" value="title">
+                            <button class="button-setting"> Sort By Title </button>
+                          </form>
+                        </div>
+                        <div class="column">
+                          <form action="/myLibrary" method="POST">
+                            <input type="hidden" name="sortType" value="author">
+                            <button class="button-setting"> Sort By Author </button>
+                          </form>
+                        </div>
+                        <div class="column">
+                          <form action="/myLibrary" method="POST">
+                            <input type="hidden" name="sortType" value="isbn">
+                            <button class="button-setting"> Sort By ISBN </button>
+                          </form>
+                        </div>
+                      </div>
+                      </li>
                   </ul>
                 </div>
               </div>
             </nav>
       </div>
-    <div class="container">
+    <div class="row">
         {{#each library}}
-          <p>Title: {{this.title}} ISBN: {{this.isbn}} Author: {{this.author}} 
+        <div class="column3">
+          <div class ="row">Title: {{this.title}} </div>
+          <div class = "row">ISBN: {{this.isbn}} </div>
+          <div class = "row">Author: {{this.author}} </div>
+          <div class = "row">
             <form action="/download" method="POST">
               <input type="hidden" name="fileName" value={{this.fileName}} />
               <button class="submit-button2">Download Here</button>
             </form>
+          </div>
+          <div class = "row">
             <div class="rate">
                   <input type="radio" id="star5" name="rate" value="5" />
                     <label for="star5" title="text">5 stars</label>
@@ -185,10 +210,9 @@
                   <input type="radio" id="star1" name="rate" value="1" />
                     <label for="star1" title="text">1 star</label>
                 </div>
-          </p>
-          <br /> <br />
+          </div>
+          </div>
         {{/each}}
-        
     </div>
 
   
