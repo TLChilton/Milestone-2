@@ -23,17 +23,20 @@
       <div class="column">
         {{#if search}}
         <h3 id="title"> {{search.title}} </h3>
-        <p id="isbn"> ISBN: {{search.isbn}} </p>
-        <p id="author"> Author: {{search.author}} </p>
-        {{#if reviewsExist}}
-        <p id= "review"> Average Review: {{search.average}} </p>
+        <div class="row" id="isbn"> ISBN: {{search.isbn}} </div>
+        <div class="row" id="author"> Author: {{search.author}} </div>
+        {{#if search.numReviews}}
+        <div class="row" id= "review"> Average Review: {{search.average}} </div>
         {{/if}}
         <!-- and then this download method will use the file name from SQL -->
+        <div class="row">
         <form action="/download" method="POST">
           <input type="hidden" name="fileName" value={{search.fileName}} />
           <button class="submit-button">Download Here</button>
         </form>
+        </div>
         <form name = "rating" action="/searchRating" method="POST">
+        <div class="row">
           <div class="rate">
               <input type="hidden" name="book" value={{search.isbn}} />
               <input type="radio" id="star5" name="rate" value="5" />
@@ -47,7 +50,7 @@
               <input type="radio" id="star1" name="rate" value="1" />
                 <label for="star1" title="text">1 star</label>
           </div>
-          <br /> <br />
+          </div>
           <div class="row"><button class="submit-button">Submit Review</button></div>
         </form>
         {{else}}
