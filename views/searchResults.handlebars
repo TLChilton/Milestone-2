@@ -20,6 +20,7 @@
     <h1> <img src="logo2.png" width="300px" /> </h1>
   </div>
     <div class="container">
+      <div class="column">
         {{#if search}}
         <h3 id="title"> {{search.title}} </h3>
         <p id="isbn"> ISBN: {{search.isbn}} </p>
@@ -52,4 +53,5 @@
           <span style="color:yellow">No Results Found</span>
         </div>
         {{/if}}
+        </div>
     </div>

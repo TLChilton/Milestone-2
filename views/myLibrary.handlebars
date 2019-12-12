@@ -65,6 +65,9 @@
             </form>
           </div>
           <div class = "row">
+            Average Review: {{this.average}}
+          </div>
+          <div class = "row">
           <form name = "rating" action="/myLibraryRating" method="POST">
             <div class="rate">
                   <input type="hidden" name="book" value={{this.isbn}} />
@@ -81,6 +84,7 @@
                 </div>
           </form>
           </div>
+          <div class="row"><button class="submit-button2">Submit Review</button></div>
           </div>
         {{/each}}
     </div>
