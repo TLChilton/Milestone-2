@@ -1,4 +1,4 @@
-﻿        <nav class="navbar navbar-inverse">
+﻿  <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
        <ul class="nav navbar-nav">
@@ -6,7 +6,7 @@
           <a class="button" href="about"> About </a>
           <a class="button" href="createAccount"> Create an Account </a>
           <a class="button" href="howtoUse"> How to Use PDF Hub </a>
-          <a class="button" href="myLibrary"> My Library </a>
+          <a class="button" href="myLibrarybyTitle"> My Library </a>
       </ul>
     </div>
     <form class="search-bar2" action="/search" method="POST">
@@ -16,7 +16,7 @@
   </div>
 </nav>
 
-<div class="jumbotron text-center">
+  <div class="jumbotron text-center">
     <h1> My Library <br /> </h1>
   </div>
   <div class="container">
@@ -25,126 +25,65 @@
               <div class="container-fluid">
                 <div class="navbar-header">
                    <ul class="nav navbar-nav">
-                    <li class="active"> <b class="button-setting" onclick="" > Sort A-Z </b>
-                      <b class="button-setting" onclick="" > Sort by Date </b>
-                      <b class="button-setting" onclick="" > Delete </b>
+                    <li class="active">
+                      <div class = "row">
+                        <div class="column">
+                          <form action="/myLibrary" method="POST">
+                            <input type="hidden" name="sortType" value="title">
+                            <button class="button-setting"> Sort By Title </button>
+                          </form>
+                        </div>
+                        <div class="column">
+                          <form action="/myLibrary" method="POST">
+                            <input type="hidden" name="sortType" value="author">
+                            <button class="button-setting"> Sort By Author </button>
+                          </form>
+                        </div>
+                        <div class="column">
+                          <form action="/myLibrary" method="POST">
+                            <input type="hidden" name="sortType" value="isbn">
+                            <button class="button-setting"> Sort By ISBN </button>
+                          </form>
+                        </div>
+                      </div>
+                      </li>
                   </ul>
                 </div>
               </div>
             </nav>
       </div>
     <div class="row">
-      <div class="column">
-          <p style="text-align: center;"> frankenstein.pdf </p> 
-          <div class="column-container" >  <!-- Downloads handled in serverHandler.js (TC) -->
-            <form action="/download1" method="GET"><button><width="100px"> </button></form>
-        </div>
-        <div class="row">
-          <div class="rate">
-            <input type="radio" id="star5" name="rate" value="5" />
-              <label for="star5" title="text">5 stars</label>
-            <input type="radio" id="star4" name="rate" value="4" />
-              <label for="star4" title="text">4 stars</label>
-            <input type="radio" id="star3" name="rate" value="3" />
-              <label for="star3" title="text">3 stars</label>
-            <input type="radio" id="star2" name="rate" value="2" />
-              <label for="star2" title="text">2 stars</label>
-            <input type="radio" id="star1" name="rate" value="1" />
-              <label for="star1" title="text">1 star</label>
+        {{#each library}}
+        <div class="column3">
+          <div class ="row">Title: {{this.title}} </div>
+          <div class = "row">ISBN: {{this.isbn}} </div>
+          <div class = "row">Author: {{this.author}} </div>
+          <div class = "row">
+            <form action="/download" method="POST">
+              <input type="hidden" name="fileName" value={{this.fileName}} />
+              <button class="submit-button2">Download Here</button>
+            </form>
           </div>
-        </div>
-      </div>
-        <div class="column">
-            <p style="text-align: center;"> Moby_Dick.pdf </p> 
-          <div class="column-container" > 
-              <form action="/download2" method="GET"><button><width="100px"></button></form>  
-          </div>
-          <div class="row">
+          <div class = "row">
+          <form name = "rating">
             <div class="rate">
-              <input type="radio" id="star5" name="rate" value="5" />
-                <label for="star5" title="text">5 stars</label>
-              <input type="radio" id="star4" name="rate" value="4" />
-                <label for="star4" title="text">4 stars</label>
-              <input type="radio" id="star3" name="rate" value="3" />
-                <label for="star3" title="text">3 stars</label>
-              <input type="radio" id="star2" name="rate" value="2" />
-                <label for="star2" title="text">2 stars</label>
-              <input type="radio" id="star1" name="rate" value="1" />
-                <label for="star1" title="text">1 star</label>
-            </div>
+                  <input type="hidden" name="book" value={{this.isbn}} />
+                  <input type="radio" id="star5" name="rate" value="5" />
+                    <label for="star5" title="text">5 stars</label>
+                  <input type="radio" id="star4" name="rate" value="4" />
+                    <label for="star4" title="text">4 stars</label>
+                  <input type="radio" id="star3" name="rate" value="3" />
+                    <label for="star3" title="text">3 stars</label>
+                  <input type="radio" id="star2" name="rate" value="2" />
+                    <label for="star2" title="text">2 stars</label>
+                  <input type="radio" id="star1" name="rate" value="1" />
+                    <label for="star1" title="text">1 star</label>
+                </div>
+          </form>
           </div>
-        </div>
-        <div class="column">
-            <p style="text-align: center;"> modestsproposal.pdf </p> 
-            <div class="column-container" > 
-              <form action="/download3" method="GET"><button><width="100px"></button></form>  
-            </div>
-            <div class="row">
-              <div class="rate">
-                <input type="radio" id="star5" name="rate" value="5" />
-                  <label for="star5" title="text">5 stars</label>
-                <input type="radio" id="star4" name="rate" value="4" />
-                  <label for="star4" title="text">4 stars</label>
-                <input type="radio" id="star3" name="rate" value="3" />
-                  <label for="star3" title="text">3 stars</label>
-                <input type="radio" id="star2" name="rate" value="2" />
-                  <label for="star2" title="text">2 stars</label>
-                <input type="radio" id="star1" name="rate" value="1" />
-                  <label for="star1" title="text">1 star</label>
-              </div>
-            </div>
-        </div>
-        <div class="column">
-            <p style="text-align: center;"> dracula.pdf </p> 
-              <div class="column-container" > 
-                  <form action="/download4" method="GET"><button><width="100px"></button></form>  
-              </div>
-              <div class="row">
-                <div class="rate">
-                  <input type="radio" id="star5" name="rate" value="5" />
-                    <label for="star5" title="text">5 stars</label>
-                  <input type="radio" id="star4" name="rate" value="4" />
-                    <label for="star4" title="text">4 stars</label>
-                  <input type="radio" id="star3" name="rate" value="3" />
-                    <label for="star3" title="text">3 stars</label>
-                  <input type="radio" id="star2" name="rate" value="2" />
-                    <label for="star2" title="text">2 stars</label>
-                  <input type="radio" id="star1" name="rate" value="1" />
-                    <label for="star1" title="text">1 star</label>
-                </div>
-              </div>
-            </div>
-        <div class="column">
-            <p style="text-align: center;"> The_Scarlet_Letter.pdf </p>
-              <div class="column-container" > 
-                    <form action="/download5" method="GET"><button><width="100px"></button></form>  
-              </div> 
-              <div class="row">
-                <div class="rate">
-                  <input type="radio" id="star5" name="rate" value="5" />
-                    <label for="star5" title="text">5 stars</label>
-                  <input type="radio" id="star4" name="rate" value="4" />
-                    <label for="star4" title="text">4 stars</label>
-                  <input type="radio" id="star3" name="rate" value="3" />
-                    <label for="star3" title="text">3 stars</label>
-                  <input type="radio" id="star2" name="rate" value="2" />
-                    <label for="star2" title="text">2 stars</label>
-                  <input type="radio" id="star1" name="rate" value="1" />
-                    <label for="star1" title="text">1 star</label>
-                </div>
-              </div>
-        </div>
-  <!--
-        <div class = "pagination">
-          <a href = "#" > &laquo;</a>
-          <a  class = "active" href = "#" > 1 </a>
-          <a href = "#" > 2 </a>
-          <a href = "#" > &raquo;</a>
-        </div> 
-      -->
+          </div>
+        {{/each}}
     </div>
-    <div class="row">
-    </div>
-  </div>
+
   
   

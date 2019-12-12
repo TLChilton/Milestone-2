@@ -66,33 +66,138 @@ app.get('/howToUse', function(req, res) {
 app.get('/index', function(req, res) {
     res.render("index", {user: req.user});
 });
+
 // Special library access handler checks to see if someone is an authorized user
-app.get('/myLibrary', function(req, res) {
+app.get('/myLibrary', async (req, res) => {
+    const db = await dbPromise;
     if (!req.user)
     {
         res.sendFile(path.join(__dirname + '/noLogin.html'));
     }
     else
     {
-        res.render("myLibrary", {user: req.user});
+        library = await db.all(
+            "SELECT * FROM pdfs ORDER BY title ASC"
+        );
+        res.render("myLibrary", {user: req.user, library: library});
+
     }
 });
+// Version of library handler with sorting options
+app.post('/myLibrary', async (req, res) => {
+    const db = await dbPromise;
+    if (!req.user)
+    {
+        res.sendFile(path.join(__dirname + '/noLogin.html'));
+        
+    }
+    else
+    {
+        const sort = req.body.sortType;
+        var library;
+        if(sort == "author")
+        {
+            library = await db.all(
+                "SELECT * FROM pdfs ORDER BY author ASC"
+            );
+        }
+        else if(sort == "isbn")
+        {
+            library = await db.all(
+                "SELECT * FROM pdfs ORDER BY isbn ASC"
+            );
+        }
+        else
+        {
+            library = await db.all(
+                "SELECT * FROM pdfs ORDER BY title ASC"
+            );
+        }
+        res.render("myLibrary", {user: req.user, library: library});
+    }
+});
+app.post('/myLibraryRating', async (req, res) => {
+    const db = await dbPromise;
+    const rating = req.body.rating;
+    const reviews = await db.get(
+        "SELECT reviews, numReviews FROM pdfs WHERE isbn = ?",
+        req.body.book
+    );
+    if (reviews.numReviews = 0)
+    {
+        await db.run(`UPDATE pdfs 
+            SET 
+                reviews = rating,
+                numReviews = 1
+            WHERE
+                isbn = ?`,
+            req.body.book
+        );
+    }
+    else
+    {
+        const average = (reviews.reviews + rating)/(reviews.numReviews + 1);
+        await db.run(`UPDATE pdfs
+            SET
+                reviews = average,
+                numReviews = numReviews + 1
+            WHERE
+                isbn = ?`,
+            req.body.book
+        );
+    }
+
+});
+
 
 // Search Request Handler
 app.post('/search', async (req,res) => {
     const db = await dbPromise;
     const search = await db.get(
-        "SELECT * FROM pdfs WHERE isbn =? OR author =? OR title=?", 
+        "SELECT * FROM pdfs WHERE isbn =? OR upper(author) =? OR upper(title)=?", 
         req.body.search,
-        req.body.search,
-        req.body.search
+        req.body.search.toUpperCase(),
+        req.body.search.toUpperCase()
     );
     console.log(search);
    res.render("searchResults", { search : search});
 });
+app.post('/searchRating', async (req, res) => {
+    const db = await dbPromise;
+    const search = req.body.search;
+    const rating = req.body.rating;
+    const reviews = await db.get(
+        "SELECT reviews, numReviews FROM pdfs WHERE isbn = ?",
+        req.body.book
+    );
+    if (reviews.numReviews = 0)
+    {
+        await db.run(`UPDATE pdfs 
+            SET 
+                reviews = rating,
+                numReviews = 1
+            WHERE
+                isbn = ?`,
+            req.body.search
+        );
+    }
+    else
+    {
+        const average = (reviews.reviews + rating)/(reviews.numReviews + 1);
+        await db.run(`UPDATE pdfs
+            SET
+                reviews = average,
+                numReviews = numReviews + 1
+            WHERE
+                isbn = ?`,
+            req.body.search
+        );
+    }
+
+});
 
 // Download Handler
-app.post('/download', async(req, res) => {
+app.post('/download', function (req, res) {
     const fileName = req.body.fileName;
     res.download(path.join(__dirname + '/public/pdfs/' + fileName));
 });
@@ -121,6 +226,8 @@ app.post('/create', async (req, res) => {
     res.redirect("/");
 });
 
+
+
 // Login Handler
 app.post('/login', async (req, res) => {
     const db = await dbPromise;
@@ -148,13 +255,20 @@ app.post('/login', async (req, res) => {
    
 });
 
+// Logout handler
+// TODO
+app.get('/logout', function (req, res) {
+    res.clearCookie();
+    res.redirect("/");
+});
+
 // Final server setup 
 const setup = async () => {	
-        const db = await dbPromise;
-        db.migrate({ force: "last"}); 
-        app.listen(3000, async () => {
-            console.log("listening on http://localhost:3000");
-        });
+    const db = await dbPromise;
+    db.migrate({ force: "last"}); 
+    app.listen(3000, async () => {
+        console.log("listening on http://localhost:3000");
+    });
 };
 
 setup();
