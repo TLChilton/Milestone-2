@@ -136,7 +136,15 @@ app.post('/myLibraryRating', async (req, res) => {
     }
     else
     {
-
+        const average = (reviews.reviews + rating)/(reviews.numReviews + 1);
+        await db.run(`UPDATE pdfs
+            SET
+                reviews = average,
+                numReviews = numReviews + 1
+            WHERE
+                isbn = ?`,
+            req.body.book
+        );
     }
 
 });
@@ -158,7 +166,33 @@ app.post('/searchRating', async (req, res) => {
     const db = await dbPromise;
     const search = req.body.search;
     const rating = req.body.rating;
-
+    const reviews = await db.get(
+        "SELECT reviews, numReviews FROM pdfs WHERE isbn = ?",
+        req.body.book
+    );
+    if (reviews.numReviews = 0)
+    {
+        await db.run(`UPDATE pdfs 
+            SET 
+                reviews = rating,
+                numReviews = 1
+            WHERE
+                isbn = ?`,
+            req.body.search
+        );
+    }
+    else
+    {
+        const average = (reviews.reviews + rating)/(reviews.numReviews + 1);
+        await db.run(`UPDATE pdfs
+            SET
+                reviews = average,
+                numReviews = numReviews + 1
+            WHERE
+                isbn = ?`,
+            req.body.search
+        );
+    }
 
 });
 
