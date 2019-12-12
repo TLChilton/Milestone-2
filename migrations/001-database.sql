@@ -13,7 +13,8 @@ CREATE TABLE IF NOT EXISTS pdfs
   isbn INTEGER PRIMARY KEY,
   title STRING,
   author STRING,
-  fileName STRING
+  fileName STRING,
+  reviews INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS authTokens
@@ -39,5 +40,4 @@ VALUES
   
 -- Down
 -- DROP TABLE users;
--- DROP TABLE pdfs;
 -- DROP TABLE authTokens;

@@ -116,6 +116,9 @@ app.post('/myLibrary', async (req, res) => {
         res.render("myLibrary", {user: req.user, library: library});
     }
 });
+app.post('/myLibraryRating', async (req, res) => {
+
+});
 
 
 // Search Request Handler
@@ -130,6 +133,9 @@ app.post('/search', async (req,res) => {
     console.log(search);
    res.render("searchResults", { search : search});
 });
+app.post('/searchRating', async (req, res) => {
+    
+})
 
 // Download Handler
 app.post('/download', function (req, res) {
@@ -160,6 +166,8 @@ app.post('/create', async (req, res) => {
     console.log(token);
     res.redirect("/");
 });
+
+
 
 // Login Handler
 app.post('/login', async (req, res) => {
@@ -197,11 +205,11 @@ app.get('/logout', function (req, res) {
 
 // Final server setup 
 const setup = async () => {	
-        const db = await dbPromise;
-        db.migrate({ force: "last"}); 
-        app.listen(3000, async () => {
-            console.log("listening on http://localhost:3000");
-        });
+    const db = await dbPromise;
+    db.migrate({ force: "last"}); 
+    app.listen(3000, async () => {
+        console.log("listening on http://localhost:3000");
+    });
 };
 
 setup();
