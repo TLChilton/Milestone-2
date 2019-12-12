@@ -191,7 +191,7 @@ app.post('/login', async (req, res) => {
 // Logout handler
 // TODO
 app.get('/logout', function (req, res) {
-    req.logout();
+    res.clearCookie();
     res.redirect("/");
 });
 
