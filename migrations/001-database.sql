@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS authTokens
 );
 
 -- pdf tables will be static
-INSERT OR IGNORE INTO pdfs (isbn, title, author, fileName)
+INSERT OR IGNORE INTO pdfs (isbn, title, author, fileName, reviews, numReviews)
 VALUES
   (9780194230032, "Frankenstein", "Mary Shelley", "frankenstein.pdf", NULL, 0),
   (082191673, "The Scarlet Letter", "Nathaniel Hawthorne", "The_Scarlet_Letter.pdf", NULL, 0),
