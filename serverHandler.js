@@ -118,7 +118,15 @@ app.post('/myLibrary', async (req, res) => {
 });
 app.post('/myLibraryRating', async (req, res) => {
     const db = await dbPromise;
-    const rating = parseInt(req.body.rating, 10);
+    const book = await db.get( "SELECT * FROM pdfs WHERE isbn = ?",
+        req.body.book
+    ); 
+    const reviewsExist = new Boolean(book.numReviews > 0);
+    res.render("myLibraryReview", { book : book, reviewsExist: reviewsExist});
+});
+app.post('/myLibraryRatingSubmit', async (req, res) => {
+    const db = await dbPromise;
+    const rating = parseInt(req.body.rate, 10);
     const review = await db.get(
         "SELECT reviews, numReviews, average FROM pdfs WHERE isbn = ?",
         req.body.book
@@ -139,7 +147,8 @@ app.post('/myLibraryRating', async (req, res) => {
         average,
         req.body.book
     );
-    res.redirect("/myLibrary");
+
+    res.redirect('/myLibrary');
 });
 
 // User Page
@@ -173,6 +182,7 @@ app.post('/search', async (req,res) => {
         res.render("searchResults", { search : search, reviewsExist: reviewsExist});
     }
 });
+// Working rating system in search page
 app.post('/searchRating', async (req, res) => {
     const db = await dbPromise;
     const rating = parseInt(req.body.rate, 10);
@@ -275,7 +285,6 @@ app.post('/login', async (req, res) => {
 // Logout handler
 // TODO
 app.get('/logout', function (req, res) {
-    res.clearCookie();
     res.redirect("/");
 });
 

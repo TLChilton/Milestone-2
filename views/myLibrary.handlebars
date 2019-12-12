@@ -69,24 +69,13 @@
             Average Review: {{this.average}}
           </div>
           {{/if}}
-          <form name = "rating" action="/myLibraryRating" method="POST">
+          <br />
           <div class = "row">
-            <div class="rate">
-                  <input type="hidden" name="book" value={{this.isbn}} />
-                  <input type="radio" id="star5{{this.isbn}}" name="rate{{this.isbn}}" value="5" />
-                    <label for="star5{{this.isbn}}" title="text">5 stars</label>
-                  <input type="radio" id="star4{{this.isbn}}" name="rate{{this.isbn}}" value="4" />
-                    <label for="star4{{this.isbn}}" title="text">4 stars</label>
-                  <input type="radio" id="star3{{this.isbn}}" name="rate{{this.isbn}}" value="3" />
-                    <label for="star3{{this.isbn}}" title="text">3 stars</label>
-                  <input type="radio" id="star2{{this.isbn}}" name="rate{{this.isbn}}" value="2" />
-                    <label for="star2{{this.isbn}}" title="text">2 stars</label>
-                  <input type="radio" id="star1{{this.isbn}}" name="rate{{this.isbn}}" value="1" />
-                    <label for="star1{{this.isbn}}" title="text">1 star</label>
-                </div>
-          </div>
-          <div class="row"><button class="submit-button2">Submit Review</button></div>
+          <form action="/myLibraryRating" method="POST">
+            <input type="hidden" name="book" value={{this.isbn}} />
+            <button class="submit-button2">Submit Review</button>
           </form>
+          </div>
           </div>
         {{/each}}
     </div>

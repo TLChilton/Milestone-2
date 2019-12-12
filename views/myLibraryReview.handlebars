@@ -1,0 +1,30 @@
+{{#if book}}
+<div class="column3">
+          <div class ="row">Title: {{book.title}} </div>
+          <div class = "row">ISBN: {{book.isbn}} </div>
+          <div class = "row">Author: {{book.author}} </div>
+          {{#if book.numReviews}}
+          <div class = "row">
+            Average Review: {{book.average}}
+          </div>
+          {{/if}}
+
+<form name = "rating" action="/myLibraryRatingSubmit" method="POST">
+          <div class = "row">
+            <div class="rate">
+                  <input type="hidden" name="book" value={{book.isbn}} />
+                  <input type="radio" id="star5" name="rate" value="5" />
+                    <label for="star5" title="text">5 stars</label>
+                  <input type="radio" id="star4" name="rate" value="4" />
+                    <label for="star4" title="text">4 stars</label>
+                  <input type="radio" id="star3" name="rate" value="3" />
+                    <label for="star3" title="text">3 stars</label>
+                  <input type="radio" id="star2" name="rate" value="2" />
+                    <label for="star2" title="text">2 stars</label>
+                  <input type="radio" id="star1" name="rate" value="1" />
+                    <label for="star1" title="text">1 star</label>
+                </div>
+          </div>
+          <div class="row"><button class="submit-button2">Review</button></div>
+        </form>
+{{/if}}
