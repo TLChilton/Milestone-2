@@ -187,10 +187,12 @@ app.post('/searchRating', async (req, res) => {
         const average = (reviews.reviews + rating)/(reviews.numReviews + 1);
         await db.run(`UPDATE pdfs
             SET
-                reviews = average,
-                numReviews = numReviews + 1
+                reviews = ?,
+                numReviews = ?
             WHERE
                 isbn = ?`,
+            rating,
+            numReviews + 1,
             req.body.search
         );
     }
